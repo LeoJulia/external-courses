@@ -1,9 +1,9 @@
-function deepClone( obj ){
+var deepClone = function f( obj ){
     var newObj = {};
 
     for(var key in obj){
         if( typeof obj[key] === 'object'){
-            newObj[key] = deepClone(obj[key]);
+            newObj[key] = f(obj[key]);
         } else {
             newObj[key] = obj[key];
         }
@@ -24,4 +24,9 @@ var obj = {
     age: 23
 }
 
-console.log( deepClone(obj) );
+var newObj = deepClone(obj);
+delete obj.obj1.obj2.hello;
+delete obj.obj1.name;
+
+console.log( obj );
+console.log( newObj );
