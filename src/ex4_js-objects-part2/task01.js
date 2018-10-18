@@ -1,6 +1,6 @@
 function searchProperty(property, obj){
     
-    if(obj.hasOwnProperty(property)){
+    if(!obj.hasOwnProperty(property)){
         console.log(obj[property]);
     } else {
         console.log('undefine');
