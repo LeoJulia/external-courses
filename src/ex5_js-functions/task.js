@@ -50,6 +50,6 @@ var Calc = function (){
 
 var Calculator = Calc();
 
-module.exports = Calculator
+//module.exports = Calculator
 
 
