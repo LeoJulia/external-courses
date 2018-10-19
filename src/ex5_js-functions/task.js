@@ -1,6 +1,4 @@
-var Calculator = Calc();
-
-function Calc(){
+var Calc = function (){
     var result = 0;
     
     function add(){
@@ -49,5 +47,9 @@ function Calc(){
         reset: reset
     }
 }
+
+var Calculator = Calc();
+
+module.exports = Calculator
 
 
