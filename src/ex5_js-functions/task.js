@@ -1,30 +1,34 @@
-var Calc = function (){
+function isNumber(n){
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+var Calc = function(){
     var result = 0;
     
-    function add(){
-        if(arguments.length !== 0){
-            result += arguments[0];
+    function add(a){
+        if(isNumber(a)){
+            result += a;
         }
         return add;
     }
 
-    function subtract(){
-        if(arguments.length !== 0){
-            result -= arguments[0];
+    function subtract(a){
+        if(isNumber(a)){
+            result -= a;
         }
         return subtract;
     }
 
-    function divide(){
-        if(arguments.length !== 0){
-            result /= arguments[0];
+    function divide(a){
+        if(isNumber(a)){
+            result /= a;
         }
         return divide;
     }
 
-    function multiply(){
-        if(arguments.length !== 0){
-            result *= arguments[0];
+    function multiply(a){
+        if(isNumber(a)){
+            result *= a;
         }
         return multiply;
     }
