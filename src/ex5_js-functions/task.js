@@ -1,4 +1,4 @@
-function isNumber(n){
+var isNumber = function(n){
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
@@ -55,5 +55,3 @@ var Calc = function(){
 var Calculator = Calc();
 
 module.exports = Calculator
-
-
