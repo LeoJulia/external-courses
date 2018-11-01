@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web');
+
+div{
+    background: url(landscape.jpg) no-repeat;
+}
+
+div h3{
+    color: #ffdec5;
+}
+
+div ul{
+    background: rgba(222, 245, 216, 0.23);
+}
+
+div ol{
+    background: rgba(245, 231, 216, 0.23);
+}
+
+li{
+    font-size: 1.1em;
+}
+
+h1, h2, h3{
+    font-family: 'Titillium Web', sans-serif;
+}
