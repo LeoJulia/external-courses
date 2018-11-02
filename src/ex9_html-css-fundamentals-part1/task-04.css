@@ -1,0 +1,42 @@
+.wrapper{
+    display: grid;
+    grid-template-columns: 200px 200px 200px;
+    grid-template-rows: 200px 200px 200px;
+    grid-column-gap: 0px;
+    width: 600px;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    margin: auto;
+}
+
+.item{
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+}
+
+label{
+    display: block;
+    width: 200px;
+    height: 200px;
+}
+
+input{
+    opacity: 0;
+    position: relative;
+    top: 82px;
+    left: 85px;
+}
+
+input:checked{
+    opacity: 1;
+}
+
+input:checked::before{
+    content: '♘';
+    font-size: 149px;
+    color: red;
+    position: absolute;
+    top: -84px;
+    left: -71px;
+    background: #fff;
+}
