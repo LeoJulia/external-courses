@@ -29,7 +29,8 @@ header{
 
 .logo{
     position: relative;
-    margin-right: 598px;
+    margin-right: 620px;
+    left: -42px;
 }
 
 .logo__text{
@@ -41,8 +42,59 @@ header{
 }
 
 .contacts__item{
+    position: relative;
     display: inline-block;
     padding: 0 17px;
+    font-size: 30px;
+}
+
+.contacts__item--marker{
+    position: absolute;
+    background: #ffffff;
+    border: 2px solid #d4d4d5;
+    font-size: 15px;
+    padding: 15px 24px;
+    width: 171px;
+    text-align: center;
+    top: -64px;
+    left: -87px;
+    border-radius: 8px;
+    visibility: hidden;
+}
+
+.contacts__item--marker:after, .contacts__item--marker:before {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.contacts__item--marker:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-top-color: #ffffff;
+	border-width: 10px;
+	margin-left: -10px;
+}
+
+.contacts__item--marker:before {
+	border-color: rgba(212, 212, 213, 0);
+	border-top-color: #d4d4d5;
+	border-width: 13px;
+	margin-left: -13px;
+}
+
+.contacts__item:hover{
+    color: #1faae2;
+    cursor: pointer;
+}
+
+.contacts__item:hover .contacts__item--marker{
+    color: #6d6e71;
+    visibility: visible;
 }
 
 hr{
@@ -156,7 +208,7 @@ main{
 }
 
 .preview{
-    position: static;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -167,6 +219,7 @@ main{
 .preview__img{
     clip-path: polygon(0% 0, 100% 0%, 100% 65%, 0% 99%);
     position: absolute;
+    top: 0px;
 }
 
 .preview__text{
@@ -242,12 +295,12 @@ main{
 
 .slider__item:first-child .slider__item--fild{
     color: #adff63;
-    background:rgba(136, 201, 78, 0.62);
+    background:rgba(136, 201, 78, 0.9);
 }
 
 .slider__item:nth-child(2) .slider__item--fild{
     color: #cc9800;
-    background: rgba(254, 236, 118, 0.62);
+    background: rgba(254, 236, 118, 0.9);
 }
 
 .slider__next{
@@ -270,11 +323,30 @@ main{
     position: static;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: baseline;
-    height: 610px;
+    height: 540px;
+    padding: 0 360px;
+    color: #6d6e71;
 }
 
 .content__item{
-    width: 567px;
+    width: 558px;
+}
+
+.content__header{
+    margin-bottom: 22px;
+}
+
+.content__img{
+    float: left;
+    margin-right: 16px;
+}
+
+.content__text{
+    text-align: justify;
+    display: inline-block;
+    text-align: justify;
+    display: inline-block;
+    width: 436px;
 }
