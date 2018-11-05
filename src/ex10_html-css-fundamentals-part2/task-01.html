@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Task #1</title>
+
+    <style>
+        input, label, fieldset{
+            font-family: Arial, Helvetica, sans-serif
+        }
+        input{
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <form action="http://httpbin.org/" method="POST">
+        <fieldset>
+            <legend>Personal data</legend>
+            <label>
+                Surname <input type="text" name="surname">
+            </label> <br/>
+
+            <label>
+                First name <input type="text" name="first_name">
+            </label> <br/>
+
+            <label>
+                Middle name <input type="text" name="middle_name">
+            </label> <br/>
+
+            <span>You are</span>  
+            <label>
+                <input type="radio" name="gender" value="male"> male 
+            </label>
+            <label>
+                <input type="radio" name="gender" value="female"> female 
+            </label> <br/>
+
+            <label>
+                Age <input type="number" name="age" min="18" max="101">
+            </label> <br/>
+
+            <label>
+                Country of Residence
+                <select name="country_of_residence">
+                    <option value="" ></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+            </label> <br/>
+
+            <span>City</span>
+                
+            <label>
+                <input type="checkbox" name="city" value="ryazan"> Ryazan
+            </label>
+                 
+            <label>
+                <input type="checkbox" name="city" value="moscow"> Moscow
+            </label> <br/>
+
+            <span>Photography</span>
+            <input type="file" name="photography">
+
+            <hr>
+
+            <span>Title</span> 
+            <select name="title" size="8">
+                <optgroup label="Technologies">
+                    <option value="web_master">Web Master</option>
+                    <option value="database_administrator">Database Administrator</option>
+                    <option value="comuter-alded_design">Computer-alded design</option>
+                </optgroup>
+                <optgroup label="Finance">
+                    <option value="economic_planning">Economic Planning</option>
+                    <option value="managment_accounting">Managment accounting</option>
+                    <option value="budgeting_and_planning">Budgeting and planning</option>
+                </optgroup>
+            </select> <br/>
+
+            <label>
+                Salary <input type="range" name="salary">
+            </label> <br/>
+
+            <textarea name="comment" cols="50" rows="10" placeholder="Tell us about yourself..."></textarea>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Contact Information</legend>
+
+            <label>
+                Site <input type="url" name="site">
+            </label> <br/>
+
+            <label>
+                Email <input type="email" name="email">
+            </label> <br/>
+
+            <label>
+                Phone <input type="tel" name="phone">
+            </label>
+            
+        </fieldset>
+
+        <label>
+            Password <input type="password" name="password" required>
+        </label> <br/>
+
+        <input type="submit" value="Отправить">
+        <input type="reset" value="Сбросить">
+    </form>
+</body>
+</html>

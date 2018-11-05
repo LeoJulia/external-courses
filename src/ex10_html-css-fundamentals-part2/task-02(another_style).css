@@ -1,0 +1,14 @@
+.table__data{
+    color: #51637b;
+    padding: 17px;
+    font-size: 14px;
+    border: 2px solid #fff;
+}
+
+.table__data--customer{
+    text-transform: capitalize; 
+}
+
+.table__data--outstanding::before{
+    content: '$ ';
+}
