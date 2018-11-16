@@ -1,0 +1,12 @@
+img{
+    width: 500px;
+    -webkit-mask-image: url(mask.png);
+    -webkit-mask-size: 477px;
+}
+
+.img{
+    background: url(https://cdn-images-1.medium.com/max/1600/0*PKZZEefqFjPtfKIW.jpg) center no-repeat;
+    width: 400px;
+    height: 400px;
+    border-radius: 100%;
+}

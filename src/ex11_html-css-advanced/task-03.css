@@ -1,0 +1,41 @@
+.field{
+    position: relative;
+    display:inline-block;
+}
+
+
+label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all .2s linear;
+    font-family: Arial; 
+    font-size: 10px;
+    color: #ceb1f6;
+    font-weight: bold;
+}
+
+input { 
+    margin-top:15px; 
+    border:1px solid #999; 
+    padding:3px 2px; 
+}
+
+input:invalid + label { 
+    top:3px; 
+    opacity:0; 
+}
+
+input:valid + label { 
+    opacity:1; 
+    top:0; 
+}
+
+input:focus{
+    outline: none;
+}
+
+input:focus + label { 
+    color:#760b91; 
+}
+
