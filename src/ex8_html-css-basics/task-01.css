@@ -1,0 +1,23 @@
+div{
+    background: #e6b37f;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+th{
+    border: 1px solid;
+    padding: 3px;
+    text-align: center;
+}
+
+td{
+    border: 1px solid;
+    padding: 3px;
+    text-align: center;
+}
+
+p{
+    text-align: justify;
+}

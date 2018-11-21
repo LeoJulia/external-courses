@@ -1,0 +1,35 @@
+div{
+    margin: 10px;
+}
+
+.first{
+    border: 3px solid greenyellow;
+}
+
+.second{
+    outline: 3px solid blue;
+}
+
+.thrid{
+    box-shadow: 0 0 0 3px tomato;
+}
+
+.fourth{
+    position: relative;   
+}
+
+.fourth::before{
+    content: ' ';
+    border: solid 3px peru;
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    bottom: -3px;
+    left: -3px;   
+}
+
+.fifth{
+    display: table;
+    width: 98%;
+    border: 3px solid #30f1dd;
+}
