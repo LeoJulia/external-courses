@@ -10,20 +10,20 @@ function Hangman(world){
     this.wrongLetter = [];
 
     this.guess = function(letter) {
-        letter = letter.toLowerCase();
+        var lt = letter.toLowerCase();
 
         var from = 0;
 
         if(this.errors !== 0){
-            if(this.letters.indexOf(letter, from) === -1){
+            if(this.letters.indexOf(lt, from) === -1){
                 this.errors--;
-                this.wrongLetter.push(letter);
+                this.wrongLetter.push(lt);
     
                 console.log('wrong letter, errors left ' + this.errors + ' | ' + this.wrongLetter.join(','));
             } else {
-                while(this.letters.indexOf(letter, from) !== -1){
-                    this.guessedLetters[this.letters.indexOf(letter, from)] = letter;
-                    from = this.letters.indexOf(letter, from) + 1;
+                while(this.letters.indexOf(lt, from) !== -1){
+                    this.guessedLetters[this.letters.indexOf(lt, from)] = lt;
+                    from = this.letters.indexOf(lt, from) + 1;
                 }
                 
                 if(this.guessedLetters.indexOf('_') !== -1){
