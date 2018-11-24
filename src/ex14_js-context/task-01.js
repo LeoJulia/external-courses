@@ -1,23 +1,35 @@
-function Calc(){
+var isNumber = function(n){
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+var Calc = function(){
     this.result = 0;
 
     this.add = function(a){
-        this.result += a;
+        if(isNumber(a)){
+            this.result += a;
+        }
         return this;
     }
 
     this.subtract = function(a){
-        this.result -= a;
+        if(isNumber(a)){
+            this.result -= a;
+        }
         return this;
     }
 
     this.multiply = function(a){
-        this.result *= a;
+        if(isNumber(a)){
+            this.result *= a;
+        }
         return this;
     }
 
     this.divide = function(a){
-        this.result /= a;
+        if(isNumber(a)){
+            this.result /= a;
+        }
         return this;
     }
 
@@ -31,24 +43,22 @@ function Calc(){
     }
 
     this.setState = function(a){
-        this.result = a;
+        if(isNumber(a)){
+            this.result = a;
+        }
         return this;
     }
 
     this.fetchData = function(callback){
-        var self = this;
+        var cb = callback.bind(this);
         setTimeout(function(){
             var serverState = 500;
-            self.setState(serverState);
-            callback();
+            cb(serverState);
         }, 1000);
+        return this;
     }
 }
 
 var Calculator = new Calc();
 
-console.log(Calculator.getResult()); // 0
-
-Calculator.fetchData(function(){
-    console.log(Calculator.getResult());
-});
+module.exports = Calculator;
