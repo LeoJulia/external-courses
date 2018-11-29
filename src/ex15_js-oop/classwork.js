@@ -17,16 +17,18 @@ Shape.prototype.constructor.toString = function(){
 }
 
 Shape.prototype.getPerimeter = function(){
+    var perimeter;
     switch(this.constructor){
         case Triangle:
-            return this.a + this.b + this.c;
+            perimeter = this.a + this.b + this.c;
             break;
         case Quadrangle:
-            return this.a + this.b + this.c + this.d;
+            perimeter = this.a + this.b + this.c + this.d;
             break;
         default: 
-            console.log('Perimeter cannot be calculated');
+            perimeter = 'Perimeter cannot be calculated';
     }
+    return perimeter;
 }
 
 function Triangle(name, a, b, c){
