@@ -114,7 +114,7 @@ PrintCalculator.prototype.sqrt = function(){
 }
 
 PrintCalculator.prototype.reset = function(){
-    SimpleCalculator.prototype.reset.apply(this);
+    SimpleCalculator.prototype.reset.call(this);
     console.log(this._name + ' was reset');
     return this;
 }

@@ -1,7 +1,15 @@
 
+var isNumber = function(n){
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 function Shape(name){
+    var arr = Array.from(arguments);
     this._type = this.constructor.toString();
     this.name = name || 'Unnamed ' + this.getType();
+    this._sides = arr.filter(function(elem){
+        return !!isNumber(elem);
+    });
 }
 
 Shape.prototype.getType = function(){
@@ -17,18 +25,9 @@ Shape.prototype.constructor.toString = function(){
 }
 
 Shape.prototype.getPerimeter = function(){
-    var perimeter;
-    switch(this.constructor){
-        case Triangle:
-            perimeter = this.a + this.b + this.c;
-            break;
-        case Quadrangle:
-            perimeter = this.a + this.b + this.c + this.d;
-            break;
-        default: 
-            perimeter = 'Perimeter cannot be calculated';
-    }
-    return perimeter;
+    return this._sides.reduce(function(sum, elem){
+        return sum + elem;
+    }, 0);
 }
 
 function Triangle(name, a, b, c){
