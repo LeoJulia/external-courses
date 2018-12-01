@@ -61,6 +61,7 @@ function Rectangle(name, a, b){
     Quadrangle.apply(this, arguments);
     this.a = a || 1;
     this.b = b || 1;
+    this._sides = [a, b, a, b];
 }
 
 Rectangle.prototype = Object.create(Quadrangle.prototype);
@@ -76,6 +77,7 @@ Rectangle.prototype.getPerimeter = function(){
 function Square(name, a){
     Rectangle.apply(this, arguments);
     this.a = a || 1;
+    this._sides = [a, a, a, a];
 }
 
 Square.prototype = Object.create(Rectangle.prototype);
