@@ -1,0 +1,363 @@
+@font-face{
+    font-family: 'ProximaNova';  
+    src: url('./fonts/ProximaNova-Regular.eot');   
+    src: url('./fonts/ProximaNova-Regular?iefix') format('eot'),  
+         url('./fonts/ProximaNova-Regular.woff') format('woff'),
+         url('./fonts/ProximaNova-Regular.ttf') format('truetype');  
+    font-weight: normal;
+    font-style: bold;
+}
+
+@font-face{
+    font-family: 'ProximaNova';  
+    src: url('./fonts/ProximaNova-Bold.eot');   
+    src: url('./fonts/ProximaNova-Bold?iefix') format('eot'),  
+         url('./fonts/ProximaNova-Bold.woff') format('woff'),
+         url('./fonts/ProximaNova-Bold.ttf') format('truetype');  
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'ProximaNova';  
+    src: url('./fonts/ProximaNova-Light.eot');   
+    src: url('./fonts/ProximaNova-Light?iefix') format('eot'),  
+         url('./fonts/ProximaNova-Light.woff') format('woff'),
+         url('./fonts/ProximaNova-Light.ttf') format('truetype');  
+    font-weight: lighter;
+    font-style: normal;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+body > *{
+    flex: 1 100%;
+}
+
+header{
+    min-height: 45px;
+    background: #2f364a;
+    color: #69738c;
+    font-family: 'ProximaNova', sans-serif;
+    font-size: 14px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.menu__item{
+    display: inline-block;
+    list-style-type: none;
+    margin-left: -4px; 
+    white-space: nowrap;
+}
+
+.menu__item--user{
+    width: 157px;
+}
+
+.menu__item-link{    
+    display: block;
+    text-decoration: none;
+    padding: 15px 20px;
+    position: relative;
+    
+}
+
+.menu__item-link:visited{
+    color: #78829d;
+}
+
+.menu__item-link:hover{
+    cursor: pointer;
+    color: #fff;
+    background: #15a4fa;
+}
+
+.menu__item-avatar{
+    position: absolute;
+    top: 7px;
+    left: 10px;
+}
+
+.menu__item-name{
+    margin-left: 30px; 
+}
+
+.menu__item-arrow{
+    padding-left: 10px;
+}
+
+.sidebar{
+    flex: 1 0px;
+    order: 1;
+    min-width: 200px;
+    background: #1f2637;
+    color: #78829d;
+    font-size: 14px;
+    font-family: 'ProximaNova', sans-serif;
+}
+
+.sidebar__item:not(:nth-child(2)){
+    padding: 0 20px;
+}
+
+.sidebar__item:not(:last-child){
+    box-shadow: 0 1px 0 #141824,
+                0 5px 0 #19202e,
+                0 6px 0 #282f41;
+}
+
+.sidebar__item:not(:first-child){
+    margin-top: 6px;
+}
+
+.sidebar__button{
+    position: relative;
+    margin: 35px 0;
+    padding: 15px 15px 13px 15px;
+    width: 160px;
+    background: #f2795a;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.sidebar__button-text{
+    text-transform: uppercase;
+    font-size: 14px;
+    margin-left: 28px;
+    font-weight: bold;
+    color: white;
+}
+
+.sidebar__button-text::before{
+    content: '+';
+    font-size: 21px;
+    position: absolute;
+    left: 18px;
+    top: 12px;
+}
+
+.sidebar__menu{
+    list-style-type: none;
+}
+
+.sidebar__menu-link{
+    display: block;
+    padding: 11px 20px;
+    text-decoration: none;
+}
+
+.sidebar__menu-link:visited{
+    color: #78829d;
+}
+
+.sidebar__menu-icon{
+    padding-right: 10px;
+}
+
+.sidebar__menu-link:hover{
+    cursor: pointer;
+    color: #fff;
+    background: #15a4fa;
+}
+
+.sidebar__item.categories{
+    padding: 17px 0;
+}
+
+.categories__item{
+    position: relative;
+    list-style-type: none;
+    padding: 11px 0 11px 45px;
+}
+
+.categories__item::before{
+    content: ' ';
+    position: absolute;
+    display: block;
+    border-radius: 100%;
+    width: 6px;
+    height: 6px;
+    background: #e64c66;
+    left: 26px;
+    top: 14px;
+}
+
+.categories__item:nth-child(2)::before{
+    background: #ffab00;
+}
+
+.categories__item:nth-child(3)::before{
+    background: #00bfdd;
+}
+
+.categories__item:nth-child(4)::before{
+    background: #7874cf;
+}
+
+.sidebar__history{
+    position: relative;
+    margin: 40px 0;
+    padding-left: 26px;
+    color: #545d74;
+}
+
+.sidebar__history-icon{
+    position: absolute;
+    left: 0;
+    top: 5px;
+}
+
+.sidebar__history-text{
+    display: inline-block;
+    margin-bottom: 17px;
+}
+
+.sidebar__history-text--bold{
+    color: #677b92;
+}
+
+main{
+    flex: 8 0px;
+    order: 2;
+    min-height: calc(100vh - 90px);
+    font-family: 'ProximaNova', sans-serif;
+}
+
+.main__header{
+    background: #eef1f7;
+    padding: 30px 20px 10px 20px;
+    border-bottom: 1px solid #dadfea;
+}
+
+.main__header-text{
+    color: #444c63;
+    font-weight: 100;
+    padding-bottom: 30px;
+}
+
+.main__menu{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0px;
+}
+
+.type{
+    list-style-type: none;
+}
+
+.type__item{
+    display: inline-block;
+    
+}
+
+.type__link{
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #8c97b2;
+    border-radius: 16px;
+    font-size: 14px;
+}
+
+.type__link:visited{
+    color: #8c97b2;
+}
+
+.type__link:hover{
+    background: #97b3ce;
+    color: #fff;
+}
+
+.searcher{
+    position: relative;
+}
+
+.searcher__item{
+    padding: 10px 40px 10px 20px;
+    width: 400px;
+    border-radius: 20px;
+    border: 1px solid #c7cddb;
+    outline: none;
+}
+
+.searcher__icon{
+    color: #8c97b2;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.library{
+    margin: 27px 20px 7px 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+
+.book{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+}
+
+.book__img{
+    width: 200px;
+    height: 275px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.book__title{
+    font-size: 15px;
+    color: #444c63;
+}
+
+.book__author{
+    font-size: 13px;
+    color: #6f7d95;
+}
+
+.book__rating {
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+    color: #ffab00;
+    width: 75px;
+}
+
+.book__rating--inner{
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+
+.book__rating--inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+}
+
+.book__rating--star::before:hover {
+    content: "\f005";
+}
+
+footer{
+    order: 3;
+    min-height: 45px;
+    background: #181e2c;
+}
