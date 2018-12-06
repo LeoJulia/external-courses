@@ -61,38 +61,36 @@ const BOOKS = [
     }
 ]
 
+var id, value;
+
 function rating(){
     var starTotal = 5;
 
     for (var i = 0; i < BOOKS.length; i++) {
         var starPercentage = BOOKS[i].rating / starTotal * 100;
-        var starPercentageRounded = Math.round(starPercentage / 10) * 10 + "%";
+        var starPercentageRounded = Math.round(starPercentage / 10) * 10 - 1 + "%";
         document.getElementsByClassName("book__rating--inner")[i].style.width = starPercentageRounded;
     }
 }
 
-function library(){
-    var library = document.createElement("div");
-    library.className = "library";
-
-    for(var i = 0; i < BOOKS.length; i++){
+function book(obj){
         var book = document.createElement("div");
         book.className = "library__item book";
 
         var bookImg = document.createElement("img");
         bookImg.className = "book__img";
-        var link = "./img/books/" + BOOKS[i].img;
+        var link = "./img/books/" + obj.img;
         bookImg.setAttribute("src", link);
         book.appendChild(bookImg);
 
         var bookTitle = document.createElement("span");
         bookTitle.className = "book__title";
-        bookTitle.innerHTML = BOOKS[i].title;
+        bookTitle.innerHTML = obj.title;
         book.appendChild(bookTitle);
 
         var boorAuthor = document.createElement("span");
         boorAuthor.className = "book__author";
-        boorAuthor.innerHTML = "by " + BOOKS[i].author;
+        boorAuthor.innerHTML = "by " + obj.author;
         book.appendChild(boorAuthor);
 
         var bookRating = document.createElement("div");
@@ -100,10 +98,10 @@ function library(){
         book.appendChild(bookRating);
 
         
-        for(var j = 0; j < 5; j++){
+        for(var i = 0; i < 5; i++){
             var star = document.createElement("i");
             star.className = "book__rating--star fa fa-star-o";
-            star.setAttribute("data-id", j + 1);
+            star.setAttribute("data-value", i + 1);
             bookRating.appendChild(star);// last end
         }
 
@@ -111,11 +109,56 @@ function library(){
         bookRatingInner.className = "book__rating--inner";
         bookRating.appendChild(bookRatingInner);
 
-        library.appendChild(book);
+        return book;
+}
+
+function library(){
+    var library = document.createElement("div");
+    library.className = "library";
+
+    for(var i = 0; i < BOOKS.length; i++){
+        var bookItem = book(BOOKS[i]);
+        bookItem.setAttribute("data-id", i);
+        library.appendChild(bookItem);
     }
 
     document.getElementsByTagName("main")[0].appendChild(library);
+
+    return library;
+}
+
+
+function onHoverStar(event){
+    var target = event.target;
+    var rating;
+
+    while (target !== this) {
+        if (target.classList.contains("book__rating--star")) {
+            rating = target.parentNode;
+            value = target.dataset.value;
+            id = target.parentNode.parentNode.dataset.id;
+            bookRatingInner = target;
+
+            while(!bookRatingInner.classList.contains("book__rating--inner")){
+                bookRatingInner = bookRatingInner.nextSibling;
+            }
+            
+            bookRatingInner.style.width = value * 20 - 1 + "%";
+            console.log('contain');
+        } else if(target.classList.contains("library__item")){
+            console.log('not contain');
+        }
+        
+        target = target.parentNode;
+    }
+}
+
+function clickStar(event){
+    
 }
 
 document.addEventListener("DOMContentLoaded", library);
-document.addEventListener("DOMContentLoaded", rating); // unfinished, need hover
+document.addEventListener("DOMContentLoaded", rating);
+
+var divLibrary = document.querySelector(".library");
+library().onmouseover = onHoverStar;
