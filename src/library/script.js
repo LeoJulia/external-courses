@@ -7,12 +7,7 @@ function loadBooks() {
   
     xhr.send();
   
-    xhr.onload = function() {
-        if (xhr.readyState !== 4) return;
-    
-        if (xhr.status != 200) {
-          alert( xhr.status + ': ' + xhr.statusText );
-        } else {
+    xhr.onload = function() {    
           try {
             BOOKS = JSON.parse(xhr.responseText);
           } catch (e) {
@@ -20,7 +15,6 @@ function loadBooks() {
           }
 
           library();
-        }
     
       }
 }
