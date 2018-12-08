@@ -1,14 +1,13 @@
 var BOOKS;
 
 function loadBooks() {
-    var response;
     var xhr = new XMLHttpRequest();
   
     xhr.open("GET", "https://rsu-library-api.herokuapp.com/books", true);
   
     xhr.send();
   
-    xhr.onreadystatechange = function() {
+    xhr.onload = function() {
         if (xhr.readyState !== 4) return;
     
         if (xhr.status != 200) {
@@ -20,13 +19,13 @@ function loadBooks() {
             alert( "Некорректный ответ " + e.message );
           }
 
-          library(BOOKS);
+          library();
         }
     
       }
 }
 
-function rating(rating, elem){
+function calculateRating(rating, elem){
     var starTotal = 5;
 
     var starPercentage = rating / starTotal * 100;
@@ -35,7 +34,7 @@ function rating(rating, elem){
 
 }
 
-function book(obj){
+function createBook(obj){
         var book = document.createElement("div");
         book.className = "library__item book";
 
@@ -87,21 +86,21 @@ function book(obj){
         bookRatingInner.className = "book__rating--inner";
         bookRating.appendChild(bookRatingInner);
 
-        rating(obj.rating, bookRatingInner);
+        calculateRating(obj.rating, bookRatingInner);
 
         return book;
 }
 
-function library(obj){
+function library(){
 
     var library = document.querySelector('.library');
     library.innerHTML = '';
 
-    for(var i = 0; i < obj.length; i++){
-        var bookItem = book(BOOKS[i]);
+    BOOKS.forEach(function(item, i){
+        var bookItem = createBook(item);
         bookItem.setAttribute("data-id", i);
         library.appendChild(bookItem);
-    }
+    });
 
     return library;
 }
@@ -113,7 +112,7 @@ function handleChangeSearch(event){
     var value = event.target.value.toLowerCase();
     var result = [];
 
-    BOOKS.forEach(function(i){
+    BOOKS.filter(function(i){
         if(i.title.toLowerCase().indexOf(value) !== -1 ||
              i.author.firstName.toLowerCase().indexOf(value) !== -1 ||
              i.author.lastName.toLowerCase().indexOf(value) !== -1){
@@ -123,11 +122,11 @@ function handleChangeSearch(event){
 
     library.innerHTML = '';
 
-    for(var i = 0; i < result.length; i++){
-        var bookItem = book(result[i]);
+    result.forEach(function(item, i){
+        var bookItem = createBook(item);
         bookItem.setAttribute("data-id", i);
         library.appendChild(bookItem);
-    }
+    })
 }
 
 var modal = document.querySelector('.modal');
@@ -161,7 +160,7 @@ function addBook(){
         title: titleInput.value,
         author: {
             firstName: author.value.split(' ')[0],
-            lastName: author.value.split(' ')[1]
+            lastName: author.value.split(' ')[1] || ''
         },
         cost: 0,
         createdAt: new Date().getTime(),
@@ -172,7 +171,7 @@ function addBook(){
     BOOKS.push(book);
     
     closeModal();
-    library(BOOKS);
+    library();
 }
 
 document.addEventListener("DOMContentLoaded", loadBooks);
