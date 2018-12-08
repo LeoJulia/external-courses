@@ -300,9 +300,8 @@ main{
 }
 
 .library{
-    margin: 27px 20px 7px 20px;
+    margin: 27px 0 7px 20px;
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
     align-content: space-between;
 }
@@ -311,7 +310,7 @@ main{
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
-
+    margin-right: 25px;
 }
 
 .book__img{
@@ -358,7 +357,7 @@ main{
 .book__rating--inner{
     position: absolute;
     top: 0;
-    left: 0;
+    left: 1px;
     white-space: nowrap;
     overflow: hidden;
     width: 0;
@@ -368,10 +367,6 @@ main{
 .book__rating--inner::before {
     content: "\f005 \f005 \f005 \f005 \f005";
 }
-
-/* .book__rating--star::before:hover {
-    content: "\f005";
-} */
 
 footer{
     order: 3;

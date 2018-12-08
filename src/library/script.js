@@ -63,14 +63,13 @@ const BOOKS = [
 
 var id, value;
 
-function rating(){
+function rating(rating, elem){
     var starTotal = 5;
 
-    for (var i = 0; i < BOOKS.length; i++) {
-        var starPercentage = BOOKS[i].rating / starTotal * 100;
-        var starPercentageRounded = Math.round(starPercentage / 10) * 10 - 1 + "%";
-        document.getElementsByClassName("book__rating--inner")[i].style.width = starPercentageRounded;
-    }
+    var starPercentage = rating / starTotal * 100;
+    var starPercentageRounded = Math.round(starPercentage / 10) * 10 - 1 + "%";
+    elem.style.width = starPercentageRounded;
+
 }
 
 function book(obj){
@@ -119,12 +118,13 @@ function book(obj){
         bookRatingInner.className = "book__rating--inner";
         bookRating.appendChild(bookRatingInner);
 
+        rating(obj.rating, bookRatingInner);
+
         return book;
 }
 
 function library(){
-    var library = document.createElement("div");
-    library.className = "library";
+    var library = document.querySelector('.library');
 
     for(var i = 0; i < BOOKS.length; i++){
         var bookItem = book(BOOKS[i]);
@@ -132,12 +132,34 @@ function library(){
         library.appendChild(bookItem);
     }
 
-    document.getElementsByTagName("main")[0].appendChild(library);
-
     return library;
+}
+
+function handleChangeSearch(event){
+
+    var library = document.querySelector('.library');
+
+    var value = event.target.value.toLowerCase();
+    var result = [];
+
+    BOOKS.forEach(function(i){
+        if(i.title.toLowerCase().indexOf(value) !== -1 ||
+             i.author.toLowerCase().indexOf(value) !== -1){
+            result.push(i);
+        }
+    });
+
+    library.innerHTML = '';
+
+    for(var i = 0; i < result.length; i++){
+        var bookItem = book(result[i]);
+        bookItem.setAttribute("data-id", i);
+        library.appendChild(bookItem);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", library);
 document.addEventListener("DOMContentLoaded", rating);
 
-var divLibrary = document.querySelector(".library");
+var searcher = document.querySelector(".searcher__item");
+searcher.addEventListener('input', handleChangeSearch);
