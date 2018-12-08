@@ -19,7 +19,7 @@ function loadBooks() {
           } catch (e) {
             alert( "Некорректный ответ " + e.message );
           }
-          
+
           library(BOOKS);
         }
     
@@ -95,6 +95,7 @@ function book(obj){
 function library(obj){
 
     var library = document.querySelector('.library');
+    library.innerHTML = '';
 
     for(var i = 0; i < obj.length; i++){
         var bookItem = book(BOOKS[i]);
@@ -129,8 +130,56 @@ function handleChangeSearch(event){
     }
 }
 
-// document.addEventListener("DOMContentLoaded", library);
+var modal = document.querySelector('.modal');
+
+function openModal() {
+    modal.style.display = "block";
+}
+
+var btnOpenModal = document.querySelector(".sidebar__button");
+btnOpenModal.addEventListener('click', openModal);
+
+function closeModal() {
+    modal.style.display = "none";
+}
+
+var btnCloseModal = document.querySelector(".close");
+btnCloseModal.addEventListener('click', btnCloseModal);
+
+
+window.onclick = function(event) {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+}
+
+function addBook(){
+    var titleInput = document.querySelectorAll(".modal__form--input")[0];
+    var author = document.querySelectorAll(".modal__form--input")[1];
+
+    var book = {
+        title: titleInput.value,
+        author: {
+            firstName: author.value.split(' ')[0],
+            lastName: author.value.split(' ')[1]
+        },
+        cost: 0,
+        createdAt: new Date().getTime(),
+        image_url:'',
+        rating: 0
+    }
+
+    BOOKS.push(book);
+    
+    closeModal();
+    library(BOOKS);
+}
+
 document.addEventListener("DOMContentLoaded", loadBooks);
 
 var searcher = document.querySelector(".searcher__item");
 searcher.addEventListener('input', handleChangeSearch);
+
+
+var modalForm = document.querySelector(".modal__form");
+modalForm.addEventListener('submit', addBook);

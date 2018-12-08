@@ -373,3 +373,52 @@ footer{
     min-height: 45px;
     background: #181e2c;
 }
+
+.modal{
+    display: none;
+    position: fixed;
+    padding: 20px;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.4);
+    width: 100%;
+    min-height: calc(100vh - 40px);
+    overflow: auto;
+    font-family: 'ProximaNova', sans-serif;
+}
+
+.modal__form{
+    background-color: #dadfea;
+    margin: 10% auto;
+    padding: 20px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal__header{
+    font-size: 20px;
+}
+
+.modal__form--item{
+    width: 227px;
+    padding-bottom: 10px;
+}
+
+.modal__form--input{
+    width: 100%;
+}
+
+.modal__form--button{
+    border: none;
+    width: 111px;
+    height: 30px;
+}
+
+.modal__form--button.add{
+    background: #15a4fa;
+}
+
+.modal__form--button.close{
+    background: #e64c66;
+}
