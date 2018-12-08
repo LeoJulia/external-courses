@@ -98,11 +98,21 @@ function book(obj){
         book.appendChild(bookRating);
 
         
-        for(var i = 0; i < 5; i++){
-            var star = document.createElement("i");
+        for(var i = 5; i > 0; i--){
+            var radio = document.createElement("input");
+            radio.className = "book__rating--input";
+            radio.setAttribute('id', obj.title + "-" + i);
+            radio.setAttribute('type', 'checkbox');
+            radio.setAttribute('name', 'rating');
+            radio.setAttribute("data-value", i);
+
+
+            var star = document.createElement('label');
             star.className = "book__rating--star fa fa-star-o";
-            star.setAttribute("data-value", i + 1);
-            bookRating.appendChild(star);// last end
+            star.setAttribute('for', obj.title + "-" + i);
+
+            bookRating.appendChild(radio);
+            bookRating.appendChild(star);
         }
 
         var bookRatingInner = document.createElement("div");
@@ -127,38 +137,7 @@ function library(){
     return library;
 }
 
-
-function onHoverStar(event){
-    var target = event.target;
-    var rating;
-
-    while (target !== this) {
-        if (target.classList.contains("book__rating--star")) {
-            rating = target.parentNode;
-            value = target.dataset.value;
-            id = target.parentNode.parentNode.dataset.id;
-            bookRatingInner = target;
-
-            while(!bookRatingInner.classList.contains("book__rating--inner")){
-                bookRatingInner = bookRatingInner.nextSibling;
-            }
-            
-            bookRatingInner.style.width = value * 20 - 1 + "%";
-            console.log('contain');
-        } else if(target.classList.contains("library__item")){
-            console.log('not contain');
-        }
-        
-        target = target.parentNode;
-    }
-}
-
-function clickStar(event){
-    
-}
-
 document.addEventListener("DOMContentLoaded", library);
 document.addEventListener("DOMContentLoaded", rating);
 
 var divLibrary = document.querySelector(".library");
-library().onmouseover = onHoverStar;

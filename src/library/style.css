@@ -332,11 +332,27 @@ main{
 }
 
 .book__rating {
-    display: inline-block;
+    display: flex;
+    flex-direction: row-reverse;
     position: relative;
     font-family: FontAwesome;
     color: #ffab00;
     width: 75px;
+}
+
+.book__rating--input{
+    display: none;
+}
+
+.book__rating--star:hover::before,
+.book__rating--star:hover ~ .book__rating--star::before,
+.book__rating--input:checked ~ .book__rating--star::before{
+	content: "\f005";
+}
+
+.book__rating--star:hover ~ .book__rating--inner,
+.book__rating--input:checked ~ .book__rating--inner{
+    display: none;
 }
 
 .book__rating--inner{
@@ -353,9 +369,9 @@ main{
     content: "\f005 \f005 \f005 \f005 \f005";
 }
 
-.book__rating--star::before:hover {
+/* .book__rating--star::before:hover {
     content: "\f005";
-}
+} */
 
 footer{
     order: 3;
