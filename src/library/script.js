@@ -14,7 +14,7 @@ function loadBooks() {
             alert( "Некорректный ответ " + e.message );
           }
 
-          library();
+          showLibrary();
     
       }
 }
@@ -85,18 +85,16 @@ function createBook(obj){
         return book;
 }
 
-function library(){
+function showLibrary(){
 
     var library = document.querySelector('.library');
     library.innerHTML = '';
 
-    BOOKS.forEach(function(item, i){
+    BOOKS.forEach(function(item){
         var bookItem = createBook(item);
-        bookItem.setAttribute("data-id", i);
+        bookItem.setAttribute("data-id", item.id);
         library.appendChild(bookItem);
     });
-
-    return library;
 }
 
 function handleChangeSearch(event){
@@ -104,21 +102,20 @@ function handleChangeSearch(event){
     var library = document.querySelector('.library');
 
     var value = event.target.value.toLowerCase();
-    var result = [];
 
-    BOOKS.filter(function(i){
-        if(i.title.toLowerCase().indexOf(value) !== -1 ||
-             i.author.firstName.toLowerCase().indexOf(value) !== -1 ||
-             i.author.lastName.toLowerCase().indexOf(value) !== -1){
-            result.push(i);
+    var result = BOOKS.filter(function(item){
+        if(item.title.toLowerCase().indexOf(value) !== -1 ||
+             item.author.firstName.toLowerCase().indexOf(value) !== -1 ||
+             item.author.lastName.toLowerCase().indexOf(value) !== -1){
+            return item;
         }
     });
 
     library.innerHTML = '';
 
-    result.forEach(function(item, i){
+    result.forEach(function(item){
         var bookItem = createBook(item);
-        bookItem.setAttribute("data-id", i);
+        bookItem.setAttribute("data-id", item.id);
         library.appendChild(bookItem);
     })
 }
@@ -153,19 +150,20 @@ function addBook(){
     var book = {
         title: titleInput.value,
         author: {
-            firstName: author.value.split(' ')[0],
+            firstName: author.value.split(' ')[0] || '',
             lastName: author.value.split(' ')[1] || ''
         },
         cost: 0,
         createdAt: new Date().getTime(),
         image_url:'',
-        rating: 0
+        rating: 0,
+        updatedAt: new Date().getTime()
     }
 
     BOOKS.push(book);
     
     closeModal();
-    library();
+    showLibrary();
 }
 
 document.addEventListener("DOMContentLoaded", loadBooks);
@@ -176,3 +174,68 @@ searcher.addEventListener('input', handleChangeSearch);
 
 var modalForm = document.querySelector(".modal__form");
 modalForm.addEventListener('submit', addBook);
+
+function filteringBook(){
+    var target = event.target;
+    var library = document.querySelector(".library");
+    library.innerHTML = "";
+
+    this.showAll = function(){
+        showLibrary();
+    };
+
+    this.showRecent = function(){
+        var result = BOOKS.map(function(item){
+            return item;
+        }).sort(function(a, b){
+            if(a.createdAt < b.createdAt){
+                return 1;
+            }
+            return -1;
+        });
+    
+        result.forEach(function(item){
+            var bookItem = createBook(item);
+            bookItem.setAttribute("data-id", item.id);
+            library.appendChild(bookItem);
+        });
+    }
+
+    this.showPopular = function(){
+        var result = BOOKS.map(function(item){
+            return item;
+        }).sort(function(a, b){
+            if(a.rating < b.rating){
+                return 1;
+            }
+            return -1;
+        });
+    
+        result.forEach(function(item){
+            var bookItem = createBook(item);
+            bookItem.setAttribute("data-id", item.id);
+            library.appendChild(bookItem);
+        });
+    }
+
+    this.showFree = function(){
+        var result = BOOKS.filter(function(item){
+            return item.cost === 0
+        });
+    
+        result.forEach(function(item){
+            var bookItem = createBook(item);
+            bookItem.setAttribute("data-id", item.id);
+            library.appendChild(bookItem);
+        });
+    }
+
+    var action = target.getAttribute('data-filter');
+
+    if(action){
+        this[action]();
+    }
+}
+
+var filter = document.querySelector(".filter");
+filter.addEventListener('click', filteringBook);

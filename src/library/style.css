@@ -253,16 +253,16 @@ main{
     padding: 0 0px;
 }
 
-.type{
+.filter{
     list-style-type: none;
 }
 
-.type__item{
+.filter__item{
     display: inline-block;
     
 }
 
-.type__link{
+.filter__link{
     display: block;
     padding: 5px 10px;
     text-decoration: none;
@@ -271,11 +271,11 @@ main{
     font-size: 14px;
 }
 
-.type__link:visited{
+.filter__link:visited{
     color: #8c97b2;
 }
 
-.type__link:hover{
+.filter__link:hover{
     background: #97b3ce;
     color: #fff;
 }
