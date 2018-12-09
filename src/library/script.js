@@ -134,7 +134,7 @@ function closeModal() {
 }
 
 var btnCloseModal = document.querySelector(".close");
-btnCloseModal.addEventListener('click', btnCloseModal);
+btnCloseModal.addEventListener('click', closeModal);
 
 
 window.onclick = function(event) {
@@ -163,7 +163,9 @@ function addBook(){
     BOOKS.push(book);
     
     closeModal();
+    addHistory();
     showLibrary();
+    showNotification();
 }
 
 document.addEventListener("DOMContentLoaded", loadBooks);
@@ -172,8 +174,8 @@ var searcher = document.querySelector(".searcher__item");
 searcher.addEventListener('input', handleChangeSearch);
 
 
-var modalForm = document.querySelector(".modal__form");
-modalForm.addEventListener('submit', addBook);
+var modalForm = document.querySelector(".add");
+modalForm.addEventListener('click', addBook);
 
 function filteringBook(){
     var target = event.target;
@@ -236,6 +238,107 @@ function filteringBook(){
         this[action]();
     }
 }
+
+var HISTORY = [];
+
+function addHistory(){
+    var target = event.target;
+
+    var titleInput = document.querySelectorAll(".modal__form--input")[0];
+    var author = document.querySelectorAll(".modal__form--input")[1];
+
+    var notification = {
+        title: titleInput.value,
+        author: {
+            firstName: author.value.split(' ')[0] || '',
+            lastName: author.value.split(' ')[1] || ''
+        },
+        createdAt: new Date().getTime()
+    }
+
+    HISTORY.push(notification);
+}
+
+function createNotification(obj){
+    var notification = document.createElement("div");
+    notification.className = "sidebar__history";
+
+    var icon = document.createElement("i");
+    icon.className = "sidebar__history-icon fa fa-clock-o";
+    icon.setAttribute("aria-hidden", "true");
+
+    notification.appendChild(icon);
+
+    var notificationMessege = document.createElement("span");
+    notificationMessege.className = "sidebar__history-text";
+
+    var notificationBook = document.createElement("span");
+    notificationBook.className = "sidebar__history-text--bold";
+    notificationBook.innerHTML = obj.title;
+
+    var notificationAuthor = document.createElement("span");
+    notificationAuthor.className = "sidebar__history-text--bold";
+    notificationAuthor.innerHTML = obj.author.firstName + ' ' + obj.author.lastName;
+
+    notificationMessege.innerHTML = "You added ";
+    notificationMessege.appendChild(notificationBook);
+    notificationMessege.innerHTML += " by ";
+    notificationMessege.appendChild(notificationAuthor);
+
+    notification.appendChild(notificationMessege);
+
+    var notificationTime = document.createElement("span");
+    notificationTime.className = "sidebar__history-time";
+
+    notificationTime.innerHTML = getTimeAgo(obj.createdAt) + ' ago';
+
+    notification.appendChild(notificationTime);
+
+    return notification;
+}
+
+function getTimeAgo(date){
+    var seconds = Math.floor((new Date() - date) / 1000);
+
+    var interval = Math.floor(seconds / 31536000);
+
+    if (interval > 1) {
+      return interval + ' years';
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+      return interval + ' months';
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+      return interval + ' days';
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+      return interval + ' hours';
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval >= 1) {
+      return interval + ' minutes';
+    }
+    return 'a few seconds';
+}
+
+function showNotification(){
+    var history = document.querySelector(".history");
+    history.innerHTML = "";
+
+    HISTORY.forEach(function(item, i, arr){
+        if(i === arr.length - 1){
+            history.appendChild(createNotification(item));
+        }
+        if(i === arr.length - 2){
+            history.appendChild(createNotification(item));
+        }
+    })
+}
+
+setInterval(showNotification, 30000);
 
 var filter = document.querySelector(".filter");
 filter.addEventListener('click', filteringBook);

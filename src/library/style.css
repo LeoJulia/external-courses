@@ -227,6 +227,10 @@ header{
     color: #677b92;
 }
 
+.sidebar__history-time{
+    display: block;
+}
+
 main{
     flex: 8 0px;
     order: 2;
