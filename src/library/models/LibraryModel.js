@@ -26,15 +26,11 @@ let LibraryModel = (() => {
         let result;
     
         this.showAll = function(){
-            result = BOOKS.map(function(item){
-                return item;
-            });
+            result = BOOKS.slice();
         };
     
         this.showRecent = function(){
-            result = BOOKS.map(function(item){
-                return item;
-            }).sort(function(a, b){
+            result = BOOKS.slice().sort(function(a, b){
                 if(a.createdAt < b.createdAt){
                     return 1;
                 }
@@ -43,9 +39,7 @@ let LibraryModel = (() => {
         }
     
         this.showPopular = function(){
-            result = BOOKS.map(function(item){
-                return item;
-            }).sort(function(a, b){
+            result = BOOKS.slice().sort(function(a, b){
                 if(a.rating <= b.rating){
                     return 1;
                 }
