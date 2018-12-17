@@ -1,7 +1,7 @@
 let Utils = (() => {
     'use strict';
 
-    function getTimeAgo(date){
+    function setTamiAgo(date){
         var seconds = Math.floor((new Date() - date) / 1000);
     
         var interval = Math.floor(seconds / 31536000);
@@ -29,6 +29,6 @@ let Utils = (() => {
     }
 
     return{
-        getTimeAgo: getTimeAgo
+        setTamiAgo
     }
 })();

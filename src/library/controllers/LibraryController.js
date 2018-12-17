@@ -1,109 +1,18 @@
-let LibraryController = ((Utils) => {
+let LibraryController = ((LibraryModel, Utils) => {
     'use strict';
-    let utils = Utils;
     
-    let BOOKS;
-    
-    function calculateRating(rating, elem){
-        const starTotal = 5;
-    
-        const starPercentage = rating / starTotal * 100;
-        const starPercentageRounded = Math.round(starPercentage / 10) * 10 - 1 + "%";
-        elem.style.width = starPercentageRounded;
-    
-    }
-    
-    function createBook(obj){
-            const book = document.createElement("div");
-            book.className = "library__item book";
-    
-            const bookImg = document.createElement("img");
-            bookImg.className = "book__img";
+    let View;
 
-            let link;
-            if(obj.image_url){
-                link = obj.image_url;
-            } else {
-                link = "https://rsu-library-api.herokuapp.com/static/images/nocover.jpg";
-            }
-            
-            bookImg.setAttribute("src", link);
-            book.appendChild(bookImg);
-    
-            const bookTitle = document.createElement("span");
-            bookTitle.className = "book__title";
-            bookTitle.innerHTML = obj.title;
-            book.appendChild(bookTitle);
-    
-            const boorAuthor = document.createElement("span");
-            boorAuthor.className = "book__author";
-            boorAuthor.innerHTML = "by " + obj.author.firstName + ' ' + obj.author.lastName;
-            book.appendChild(boorAuthor);
-    
-            const bookRating = document.createElement("div");
-            bookRating.className = "book__rating";
-            book.appendChild(bookRating);
-    
-            
-            for(let i = 5; i > 0; i--){
-                const radio = document.createElement("input");
-                radio.className = "book__rating--input";
-                radio.setAttribute('id', obj.title + "-" + i);
-                radio.setAttribute('type', 'radio');
-                radio.setAttribute('name', 'rating');
-                radio.setAttribute("data-value", i);
-    
-    
-                const star = document.createElement('label');
-                star.className = "book__rating--star fa fa-star-o";
-                star.setAttribute('for', obj.title + "-" + i);
-    
-                bookRating.appendChild(radio);
-                bookRating.appendChild(star);
-            }
-    
-            const bookRatingInner = document.createElement("div");
-            bookRatingInner.className = "book__rating--inner";
-            bookRating.appendChild(bookRatingInner);
-    
-            calculateRating(obj.rating, bookRatingInner);
-    
-            return book;
-    }
-    
-    function showLibrary(obj){
-        BOOKS = obj;
-        const library = document.querySelector('.library');
-        library.innerHTML = '';
-    
-        obj.forEach(function(item){
-            const bookItem = createBook(item);
-            bookItem.setAttribute("data-id", item.id);
-            library.appendChild(bookItem);
-        });
+    function setView(view){
+        View = view;
     }
 
-    function handleChangeSearch(event){
+    function showBooks(){
+        LibraryModel.getBooks(LibraryView.showLibrary);
+    }
 
-        const library = document.querySelector('.library');
-    
-        const value = event.target.value.toLowerCase();
-    
-        const result = BOOKS.filter(function(item){
-            if(item.title.toLowerCase().indexOf(value) !== -1 ||
-                 item.author.firstName.toLowerCase().indexOf(value) !== -1 ||
-                 item.author.lastName.toLowerCase().indexOf(value) !== -1){
-                return item;
-            }
-        });
-    
-        library.innerHTML = '';
-    
-        result.forEach(function(item){
-            const bookItem = createBook(item);
-            bookItem.setAttribute("data-id", item.id);
-            library.appendChild(bookItem);
-        })
+    function search(event){
+        LibraryModel.handleChangeSearch(event, View.showLibrary);
     }
 
     let modalWindow;
@@ -137,77 +46,15 @@ let LibraryController = ((Utils) => {
             updatedAt: new Date().getTime()
         }
     
-        BOOKS.push(book);
-        
+        LibraryModel.setBooks(book, View.showLibrary);
         closeModal();
         addHistory();
-        showLibrary(BOOKS);
         showNotification();
     }
 
-    function filteringBook(){
-        var target = event.target;
-        var library = document.querySelector(".library");
-        library.innerHTML = "";
-    
-        this.showAll = function(){
-            showLibrary(BOOKS);
-        };
-    
-        this.showRecent = function(){
-            var result = BOOKS.map(function(item){
-                return item;
-            }).sort(function(a, b){
-                if(a.createdAt < b.createdAt){
-                    return 1;
-                }
-                return -1;
-            });
-        
-            result.forEach(function(item){
-                var bookItem = createBook(item);
-                bookItem.setAttribute("data-id", item.id);
-                library.appendChild(bookItem);
-            });
-        }
-    
-        this.showPopular = function(){
-            var result = BOOKS.map(function(item){
-                return item;
-            }).sort(function(a, b){
-                if(a.rating < b.rating){
-                    return 1;
-                }
-                return -1;
-            });
-        
-            result.forEach(function(item){
-                var bookItem = createBook(item);
-                bookItem.setAttribute("data-id", item.id);
-                library.appendChild(bookItem);
-            });
-        }
-    
-        this.showFree = function(){
-            var result = BOOKS.filter(function(item){
-                return item.cost === 0
-            });
-        
-            result.forEach(function(item){
-                var bookItem = createBook(item);
-                bookItem.setAttribute("data-id", item.id);
-                library.appendChild(bookItem);
-            });
-        }
-    
-        var action = target.getAttribute('data-filter');
-    
-        if(action){
-            this[action]();
-        }
+    function filter(){
+        LibraryModel.filteringBook(View.showLibrary);
     }
-
-    var HISTORY = [];
 
     function addHistory(){
 
@@ -223,7 +70,7 @@ let LibraryController = ((Utils) => {
             createdAt: new Date().getTime()
         }
 
-        HISTORY.push(notification);
+        LibraryModel.HISTORY.push(notification);
     }
 
     function createNotification(obj){
@@ -257,7 +104,7 @@ let LibraryController = ((Utils) => {
         var notificationTime = document.createElement("span");
         notificationTime.className = "sidebar__history-time";
 
-        notificationTime.innerHTML = utils.getTimeAgo(obj.createdAt) + ' ago';
+        notificationTime.innerHTML = Utils.setTamiAgo(obj.createdAt) + ' ago';
 
         notification.appendChild(notificationTime);
 
@@ -268,11 +115,8 @@ let LibraryController = ((Utils) => {
         var history = document.querySelector(".history");
         history.innerHTML = "";
     
-        HISTORY.forEach(function(item, i, arr){
-            if(i === arr.length - 1){
-                history.appendChild(createNotification(item));
-            }
-            if(i === arr.length - 2){
+        LibraryModel.HISTORY.forEach(function(item, i, arr){
+            if(i === arr.length - 1 || i === arr.length - 2){
                 history.appendChild(createNotification(item));
             }
         })
@@ -281,16 +125,16 @@ let LibraryController = ((Utils) => {
     setInterval(showNotification, 30000);
 
     return{
-        showLibrary: showLibrary,
-        createBook: createBook,
-        handleChangeSearch: handleChangeSearch,
-        addBook: addBook,
-        openModal: openModal,
-        closeModal: closeModal,
-        getModal: getModal,
-        filteringBook: filteringBook,
-        addHistory: addHistory,
-        createNotification: createNotification,
-        showNotification: showNotification
+        search,
+        addBook,
+        openModal,
+        closeModal,
+        getModal,
+        filter,
+        addHistory,
+        createNotification,
+        showNotification,
+        setView,
+        showBooks
     }
-  })(Utils);
+  })(LibraryModel, Utils);

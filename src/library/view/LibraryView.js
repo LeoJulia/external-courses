@@ -1,13 +1,11 @@
-let LibraryView = ((LibraryController) => {
+let LibraryView = ((LibraryController, Utils) => {
     'use strict';
 
-    let controller = LibraryController;
-
     let searcher = document.querySelector(".searcher__item");
-    searcher.addEventListener('input', controller.handleChangeSearch);
+    searcher.addEventListener('input', LibraryController.search);
 
     var modal = document.querySelector('.modal');
-    controller.getModal(modal);
+    LibraryController.getModal(modal);
 
     window.onclick = function(event) {
         if (event.target === modal) {
@@ -16,36 +14,98 @@ let LibraryView = ((LibraryController) => {
     }
 
     var btnOpenModal = document.querySelector(".sidebar__button");
-    btnOpenModal.addEventListener('click', controller.openModal);
+    btnOpenModal.addEventListener('click', LibraryController.openModal);
 
     var btnCloseModal = document.querySelector(".close");
-    btnCloseModal.addEventListener('click', controller.closeModal);
+    btnCloseModal.addEventListener('click', LibraryController.closeModal);
 
     var modalForm = document.querySelector(".add");
-    modalForm.addEventListener('click', controller.addBook);
+    modalForm.addEventListener('click', LibraryController.addBook);
 
     var filter = document.querySelector(".filter");
-    filter.addEventListener('click', controller.filteringBook);
+    filter.addEventListener('click', LibraryController.filter);
 
-    let BOOKS;
+    function calculateRating(rating, elem){
+        const starTotal = 5;
+    
+        const starPercentage = rating / starTotal * 100;
+        const starPercentageRounded = Math.round(starPercentage / 10) * 10 - 1 + "%";
+        elem.style.width = starPercentageRounded;
+    
+    }
+    
+    function createBook(obj){
+            const book = document.createElement("div");
+            book.className = "library__item book";
+    
+            const bookImg = document.createElement("img");
+            bookImg.className = "book__img";
 
-    function init(){
-        var xhr = new XMLHttpRequest();
-  
-        xhr.open("GET", "https://rsu-library-api.herokuapp.com/books", true);
-    
-        xhr.send();
-    
-        xhr.onload = function() {    
-            try {
-                BOOKS = JSON.parse(xhr.responseText);
-            } catch (e) {
-                console.log( "Некорректный ответ " + e.message );
+            let link;
+            if(obj.image_url){
+                link = obj.image_url;
+            } else {
+                link = "https://rsu-library-api.herokuapp.com/static/images/nocover.jpg";
             }
             
-            controller.showLibrary(BOOKS);
-        }
+            bookImg.setAttribute("src", link);
+            book.appendChild(bookImg);
+    
+            const bookTitle = document.createElement("span");
+            bookTitle.className = "book__title";
+            bookTitle.innerHTML = obj.title;
+            book.appendChild(bookTitle);
+    
+            const boorAuthor = document.createElement("span");
+            boorAuthor.className = "book__author";
+            boorAuthor.innerHTML = "by " + obj.author.firstName + ' ' + obj.author.lastName;
+            book.appendChild(boorAuthor);
+    
+            const bookRating = document.createElement("div");
+            bookRating.className = "book__rating";
+            book.appendChild(bookRating);
+    
+            
+            for(let i = 5; i > 0; i--){
+                const radio = document.createElement("input");
+                radio.className = "book__rating--input";
+                radio.setAttribute('id', obj.title + "-" + i);
+                radio.setAttribute('type', 'radio');
+                radio.setAttribute('name', 'rating');
+                radio.setAttribute("data-value", i);
+    
+    
+                const star = document.createElement('label');
+                star.className = "book__rating--star fa fa-star-o";
+                star.setAttribute('for', obj.title + "-" + i);
+    
+                bookRating.appendChild(radio);
+                bookRating.appendChild(star);
+            }
+    
+            const bookRatingInner = document.createElement("div");
+            bookRatingInner.className = "book__rating--inner";
+            bookRating.appendChild(bookRatingInner);
+    
+            calculateRating(obj.rating, bookRatingInner);
+    
+            return book;
+    }
+    
+    function showLibrary(obj){
+        const library = document.querySelector('.library');
+        library.innerHTML = '';
+    
+        obj.forEach(function(item){
+            const bookItem = createBook(item);
+            bookItem.setAttribute("data-id", item.id);
+            library.appendChild(bookItem);
+        });
     }
 
-    return {init: init}
-})(LibraryController);
+    return {
+            showLibrary,
+            createBook,
+            calculateRating,
+        }
+})(LibraryController, Utils);

@@ -1,5 +1,6 @@
 (() => {
     'use strict';
-
-    LibraryView.init();
+    
+    LibraryController.setView(LibraryView);
+    LibraryController.showBooks();
 })();
