@@ -1,9 +1,9 @@
 let LibraryModel = (() => {
-    var BOOKS;
+    let BOOKS;
     let HISTORY = [];
 
     function getBooks(cb){
-        var xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
     
         xhr.open("GET", "https://rsu-library-api.herokuapp.com/books", true);
     
@@ -20,59 +20,68 @@ let LibraryModel = (() => {
         }
     }
 
+    showAll = () => {
+        return BOOKS.slice();
+    };
+
+    showRecent = () => {
+        return BOOKS.slice().sort(function(a, b){
+            if(a.createdAt < b.createdAt){
+                return 1;
+            }
+            return -1;
+        });
+    }
+
+    showPopular = () => {
+        return BOOKS.slice().sort(function(a, b){
+            if(a.rating <= b.rating){
+                return 1;
+            }
+            return -1;
+        });
+    }
+
+    showFree = () => {
+        return BOOKS.filter(function(item){
+            return item.cost === 0;
+        });
+    }
+
     function filteringBook(cb){
         let target = event.target;
 
         let result;
     
-        this.showAll = function(){
-            result = BOOKS.slice();
-        };
-    
-        this.showRecent = function(){
-            result = BOOKS.slice().sort(function(a, b){
-                if(a.createdAt < b.createdAt){
-                    return 1;
-                }
-                return -1;
-            });
-        }
-    
-        this.showPopular = function(){
-            result = BOOKS.slice().sort(function(a, b){
-                if(a.rating <= b.rating){
-                    return 1;
-                }
-                return -1;
-            });
-        }
-    
-        this.showFree = function(){
-            result = BOOKS.filter(function(item){
-                return item.cost === 0;
-            });
-        }
-    
         let action = target.getAttribute('data-filter');
-    
-        if(action){
-            this[action]();
-            cb(result);
+
+        switch(action) {
+            case "showRecent":  
+                result = showRecent(result);
+                break;
+            case "showPopular":  
+                result = showPopular(result);
+                break;
+            case "showFree":
+                result = showFree(result);
+                break;
+            default:
+                result = showAll(result);
+                break;
         }
+        
+        cb(result);
     }
 
     function handleChangeSearch(event, cb){
     
         const value = event.target.value.toLowerCase();
     
-        const result = BOOKS.filter(function(item){
-            if(item.title.toLowerCase().indexOf(value) !== -1 ||
-                 item.author.firstName.toLowerCase().indexOf(value) !== -1 ||
-                 item.author.lastName.toLowerCase().indexOf(value) !== -1){
-                return item;
-            }
-        });
-
+        const result = BOOKS.filter((item) => 
+                item.title.toLowerCase().indexOf(value) !== -1 ||
+                item.author.firstName.toLowerCase().indexOf(value) !== -1 ||
+                item.author.lastName.toLowerCase().indexOf(value) !== -1);
+        
         cb(result);
     }
 

@@ -1,11 +1,14 @@
 let LibraryView = ((LibraryController, Utils) => {
     'use strict';
+    let history = document.querySelector(".history");
+
+    let titleInput = document.querySelectorAll(".modal__form--input")[0];
+    let author = document.querySelectorAll(".modal__form--input")[1];
 
     let searcher = document.querySelector(".searcher__item");
     searcher.addEventListener('input', LibraryController.search);
 
-    var modal = document.querySelector('.modal');
-    LibraryController.getModal(modal);
+    const modal = document.querySelector('.modal');
 
     window.onclick = function(event) {
         if (event.target === modal) {
@@ -13,16 +16,24 @@ let LibraryView = ((LibraryController, Utils) => {
         }
     }
 
-    var btnOpenModal = document.querySelector(".sidebar__button");
-    btnOpenModal.addEventListener('click', LibraryController.openModal);
+    function openModal() {
+        modal.style.display = "block";
+    }
 
-    var btnCloseModal = document.querySelector(".close");
-    btnCloseModal.addEventListener('click', LibraryController.closeModal);
+    function closeModal() {
+        modal.style.display = "none";
+    }
 
-    var modalForm = document.querySelector(".add");
+    const btnOpenModal = document.querySelector(".sidebar__button");
+    btnOpenModal.addEventListener('click', openModal);
+
+    const btnCloseModal = document.querySelector(".close");
+    btnCloseModal.addEventListener('click', closeModal);
+
+    const modalForm = document.querySelector(".add");
     modalForm.addEventListener('click', LibraryController.addBook);
 
-    var filter = document.querySelector(".filter");
+    const filter = document.querySelector(".filter");
     filter.addEventListener('click', LibraryController.filter);
 
     function calculateRating(rating, elem){
@@ -107,5 +118,8 @@ let LibraryView = ((LibraryController, Utils) => {
             showLibrary,
             createBook,
             calculateRating,
+            openModal,
+            closeModal,
+            elements: {history, titleInput, author}
         }
 })(LibraryController, Utils);

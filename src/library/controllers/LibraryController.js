@@ -15,25 +15,11 @@ let LibraryController = ((LibraryModel, Utils) => {
         LibraryModel.handleChangeSearch(event, View.showLibrary);
     }
 
-    let modalWindow;
-
-    function getModal(modal){
-        modalWindow = modal;
-    }
-
-    function openModal() {
-        modalWindow.style.display = "block";
-    }
-
-    function closeModal() {
-        modalWindow.style.display = "none";
-    }
-
     function addBook(){
-        var titleInput = document.querySelectorAll(".modal__form--input")[0];
-        var author = document.querySelectorAll(".modal__form--input")[1];
+        let titleInput = View.elements.titleInput;
+        let author = View.elements.author;
     
-        var book = {
+        let book = {
             title: titleInput.value,
             author: {
                 firstName: author.value.split(' ')[0] || '',
@@ -47,7 +33,7 @@ let LibraryController = ((LibraryModel, Utils) => {
         }
     
         LibraryModel.setBooks(book, View.showLibrary);
-        closeModal();
+        View.closeModal();
         addHistory();
         showNotification();
     }
@@ -58,10 +44,10 @@ let LibraryController = ((LibraryModel, Utils) => {
 
     function addHistory(){
 
-        var titleInput = document.querySelectorAll(".modal__form--input")[0];
-        var author = document.querySelectorAll(".modal__form--input")[1];
+        let titleInput = View.elements.titleInput;
+        let author = View.elements.author;
 
-        var notification = {
+        let notification = {
             title: titleInput.value,
             author: {
                 firstName: author.value.split(' ')[0] || '',
@@ -74,23 +60,23 @@ let LibraryController = ((LibraryModel, Utils) => {
     }
 
     function createNotification(obj){
-        var notification = document.createElement("div");
+        let notification = document.createElement("div");
         notification.className = "sidebar__history";
 
-        var icon = document.createElement("i");
+        let icon = document.createElement("i");
         icon.className = "sidebar__history-icon fa fa-clock-o";
         icon.setAttribute("aria-hidden", "true");
 
         notification.appendChild(icon);
 
-        var notificationMessege = document.createElement("span");
+        let notificationMessege = document.createElement("span");
         notificationMessege.className = "sidebar__history-text";
 
-        var notificationBook = document.createElement("span");
+        let notificationBook = document.createElement("span");
         notificationBook.className = "sidebar__history-text--bold";
         notificationBook.innerHTML = obj.title;
 
-        var notificationAuthor = document.createElement("span");
+        let notificationAuthor = document.createElement("span");
         notificationAuthor.className = "sidebar__history-text--bold";
         notificationAuthor.innerHTML = obj.author.firstName + ' ' + obj.author.lastName;
 
@@ -101,10 +87,10 @@ let LibraryController = ((LibraryModel, Utils) => {
 
         notification.appendChild(notificationMessege);
 
-        var notificationTime = document.createElement("span");
+        let notificationTime = document.createElement("span");
         notificationTime.className = "sidebar__history-time";
 
-        notificationTime.innerHTML = Utils.setTamiAgo(obj.createdAt) + ' ago';
+        notificationTime.innerHTML = Utils.setTimeAgo(obj.createdAt) + ' ago';
 
         notification.appendChild(notificationTime);
 
@@ -112,7 +98,7 @@ let LibraryController = ((LibraryModel, Utils) => {
     }
 
     function showNotification(){
-        var history = document.querySelector(".history");
+        let history = View.elements.history;
         history.innerHTML = "";
     
         LibraryModel.HISTORY.forEach(function(item, i, arr){
@@ -127,9 +113,6 @@ let LibraryController = ((LibraryModel, Utils) => {
     return{
         search,
         addBook,
-        openModal,
-        closeModal,
-        getModal,
         filter,
         addHistory,
         createNotification,
