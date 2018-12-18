@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Library</title>
+</head>
+
+<body>
+    <header>
+        <ul class="menu">
+            <li class="menu__item">
+                <a href="#" class="menu__item-link">
+                    Help Center
+                </a>
+            </li>
+            <li class="menu__item">
+                <a href="#" class="menu__item-link">
+                    Our Support
+                </a>
+            </li>
+            <li class="menu__item menu__item--user">
+                <a href="#" class="menu__item-link">
+                    <img src="img/avatar-01.png" alt="avatar" class="menu__item-avatar">
+                    <span class="menu__item-name">Jhon Doe</span>
+                    <i class="menu__item-arrow fa fa-arrow-circle-down" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <nav class="sidebar">
+        <div class="sidebar__item">
+            <button class="sidebar__button">
+                <span class="sidebar__button-text">Add a book</span>
+            </button>
+        </div>
+        <div class="sidebar__item">
+            <ul class="sidebar__menu">
+                <li class="sidebar__menu-item">
+                    <a class="sidebar__menu-link" href="#">
+                        <i class="sidebar__menu-icon fa fa-book" aria-hidden="true"></i>
+                        Now Reading
+                    </a>
+                </li>
+                <li class="sidebar__menu-item">
+                    <a class="sidebar__menu-link" href="#">
+                        <i class="sidebar__menu-icon fa fa-globe" aria-hidden="true"></i>
+                        Browse
+                    </a>
+                </li>
+                <li class="sidebar__menu-item">
+                    <a class="sidebar__menu-link" href="#">
+                        <i class="sidebar__menu-icon fa fa-shopping-cart" aria-hidden="true"></i>
+                        Buy Books
+                    </a>
+                </li>
+                <li class="sidebar__menu-item">
+                    <a class="sidebar__menu-link" href="#">
+                        <i class="sidebar__menu-icon fa fa-star" aria-hidden="true"></i>
+                        Favourite Books
+                    </a>
+                </li>
+                <li class="sidebar__menu-item">
+                    <a class="sidebar__menu-link" href="#">
+                        <i class="sidebar__menu-icon fa fa-th-list" aria-hidden="true"></i>
+                        Wishlist
+                    </a>
+                </li>
+                <li class="sidebar__menu-item">
+                    <a class="sidebar__menu-link" href="#">
+                        <i class="sidebar__menu-icon fa fa-clock-o" aria-hidden="true"></i>
+                        History
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar__item categories">
+            <ul class="categories__list">
+                <li class="categories__item">Must Read Titles</li>
+                <li class="categories__item">Best of list</li>
+                <li class="categories__item">Classic Novels</li>
+                <li class="categories__item">Non Fiction</li>
+            </ul>
+        </div>
+        <div class="sidebar__item history">
+            
+        </div>
+    </nav>
+    <main>
+        <div class="main__header">
+            <h1 class="main__header-text">Browse Available Books</h1>
+
+            <div class="main__menu">
+                <ul class="main__manu-item filter">
+                    <li class="filter__item">
+                        <a href="#" class="filter__link" data-filter="showAll">All Books</a>
+                    </li>
+                    <li class="filter__item">
+                        <a href="#" class="filter__link" data-filter="showRecent">Most Recent</a>
+                    </li>
+                    <li class="filter__item">
+                        <a href="#" class="filter__link" data-filter="showPopular">Most Popular</a>
+                    </li>
+                    <li class="filter__item">
+                        <a href="#" class="filter__link" data-filter="showFree">Free Books</a>
+                    </li>
+                </ul>
+
+                <div class="main__manu-item">
+                    <form action="" class="searcher">
+                        <input type="search" placeholder="Enter Keywords" class="searcher__item">
+                        <i class="searcher__icon fa fa-search" aria-hidden="true"></i>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="library">
+
+        </div>
+
+    </main>
+
+    <footer>
+    </footer>
+
+    <div class="modal">
+        <form class="modal__form">
+            <span class="modal__header">Add a Book</span>
+            <div class="modal__form--item">
+                <label class="modal__form--lable">
+                    <span class="modal__form--text">Title:</span>
+                    <input class="modal__form--input" type="text" placeholder="Title">
+                </label>
+            </div>
+            <div class="modal__form--item">
+                <label class="modal__form--lable">
+                    <span class="modal__form--text">Author:</span>
+                    <input class="modal__form--input" type="text" placeholder="Author">
+                </label>
+            </div>
+            <div class="modal__form--item">
+                <input class="modal__form--button add" type="submit" value="Add" data-history="addBookNotification">
+                <button class="modal__form--button close">Close</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="./utils/Utils.js"></script>
+    <script src="./models/LibraryModel.js"></script>
+    <script src="./controllers/LibraryController.js"></script>
+    <script src="./view/LibraryView.js"></script>
+    <script src="./index.js"></script>
+</body>
+
+</html>
